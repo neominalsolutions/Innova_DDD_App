@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 namespace PO.DomainLayer.Handlers
 {
   // PurchaseQuoteAggregate
-  public class RejectPurchaseQuoteNotApprovedHandler : INotificationHandler<TransformAsOrderEvent>
+  public class RejectNotApprovedPurchaseQuoteHandler : INotificationHandler<TransformAsOrderEvent>
   {
     public Task Handle(TransformAsOrderEvent notification, CancellationToken cancellationToken)
     {
-      return Console.Out.WriteLineAsync($"{notification.PurchaseQuoteId} Approved oldu {notification.PurchaseRequestId} tanımlanmış tüm diğer Quoteları Rejected Yap");
+      return Console.Out.WriteLineAsync($"{notification.PurchaseQuoteId} Approved oldu {notification.PurchaseRequestId} tanımlanmış tüm diğer Quoteları Rejected Yap \n");
     }
   }
 }

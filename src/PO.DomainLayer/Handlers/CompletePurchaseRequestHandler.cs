@@ -13,7 +13,7 @@ namespace PO.DomainLayer.Handlers
   {
     public Task Handle(TransformAsOrderEvent notification, CancellationToken cancellationToken)
     {
-      return Console.Out.WriteAsync("Purchase Request Completed oldu");
+      return Console.Out.WriteAsync("Purchase Request Completed oldu \n");
 
     }
   }
