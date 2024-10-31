@@ -35,16 +35,16 @@ namespace PO.API.Data
       // Purchase Quote 
 
       modelBuilder.Entity<PurchaseQuote>().OwnsOne(x => x.Cost).Property(x => x.Amount).HasColumnName("Cost_Amount");
-      modelBuilder.Entity<PurchaseQuote>().OwnsOne(x => x.Cost).Property(x => x.Amount).HasColumnName("Cost_Currency");
+      modelBuilder.Entity<PurchaseQuote>().OwnsOne(x => x.Cost).Property(x => x.Currency).HasColumnName("Cost_Currency");
 
 
       modelBuilder.Entity<PurchaseQuote>().OwnsOne(x => x.Status).Property(x => x.Text).HasColumnName("Status_Text");
-      modelBuilder.Entity<PurchaseQuote>().OwnsOne(x => x.Status).Property(x => x.Value).HasColumnName("Cost_Value");
+      modelBuilder.Entity<PurchaseQuote>().OwnsOne(x => x.Status).Property(x => x.Value).HasColumnName("Status_Value");
 
       // PurchaseOrder
 
       modelBuilder.Entity<PurchaseOrder>().OwnsOne(x => x.Status).Property(x => x.Text).HasColumnName("Status_Text");
-      modelBuilder.Entity<PurchaseOrder>().OwnsOne(x => x.Status).Property(x => x.Value).HasColumnName("Cost_Value");
+      modelBuilder.Entity<PurchaseOrder>().OwnsOne(x => x.Status).Property(x => x.Value).HasColumnName("Status_Value");
 
 
       base.OnModelCreating(modelBuilder);
