@@ -57,25 +57,36 @@ namespace PO.API.Data
 
     public override int SaveChanges()
     {
-      // git changeTracker üzerinden içine event eklenmiş olan nesneleri bul
-      var dbEntries = this.ChangeTracker.Entries<AggregateRoot>().Where(x => x.Entity.events != null && x.Entity.events.Any());
 
-      var events = dbEntries.SelectMany(x => x.Entity.events).ToList();
-
-      events.ForEach((@event) =>
+      try
       {
-        mediator.Publish(@event).Wait();
-      });
 
-      dbEntries.ToList().ForEach((item) =>
+        // git changeTracker üzerinden içine event eklenmiş olan nesneleri bul
+        var dbEntries = this.ChangeTracker.Entries<AggregateRoot>().Where(x => x.Entity.events != null && x.Entity.events.Any());
+
+        var events = dbEntries.SelectMany(x => x.Entity.events).ToList();
+
+        events.ForEach((@event) =>
+        {
+          mediator.Publish(@event).Wait();
+        });
+
+        dbEntries.ToList().ForEach((item) =>
+        {
+          item.Entity.ClearEvents(); // Tüm In Memory Eventleri Temizle
+        });
+
+        return base.SaveChanges();
+      }
+      catch (Exception ex)
       {
-        item.Entity.ClearEvents(); // Tüm In Memory Eventleri Temizle
-      });
-
+        Console.Out.WriteLine(ex.Message);
+        return 0;
+      }
 
       // Pre Save eventleri fırlatacağımız bölge.
 
-      return base.SaveChanges();
+    
     }
   }
 }

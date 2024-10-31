@@ -13,6 +13,7 @@ namespace PO.DomainLayer.Handlers
   public class RejectNotApprovedPurchaseQuoteHandler : INotificationHandler<TransformAsOrderEvent>
   {
     private readonly IPurchaseQuoteRepository purchaseQuoteRepository;
+    
 
 
     public RejectNotApprovedPurchaseQuoteHandler(IPurchaseQuoteRepository purchaseQuoteRepository)
@@ -23,13 +24,18 @@ namespace PO.DomainLayer.Handlers
     public Task Handle(TransformAsOrderEvent notification, CancellationToken cancellationToken)
     {
 
-      var notApprovedQuotes = this.purchaseQuoteRepository.Find(x => x.PurchaseRequestId == notification.PurchaseRequestId && x.Id != notification.PurchaseQuoteId);
+      var notApprovedQuotes = this.purchaseQuoteRepository.Find(x => x.PurchaseRequestId == notification.PurchaseRequestId).ToList();
 
-      notApprovedQuotes.ToList().ForEach((item) =>
+
+     
+
+      foreach (var item in notApprovedQuotes)
       {
-        item.OnReject();
-        this.purchaseQuoteRepository.Update(item); // Modified State
-      });
+        if(item.Id != notification.PurchaseQuoteId)
+        {
+          item.OnReject();
+        }
+      }
 
       return Console.Out.WriteLineAsync($"{notification.PurchaseQuoteId} Approved oldu {notification.PurchaseRequestId} tanımlanmış tüm diğer Quoteları Rejected Yap \n");
     }

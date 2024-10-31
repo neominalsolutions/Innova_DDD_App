@@ -37,11 +37,11 @@ namespace PO.DomainLayer.Aggregates.PR
     /// </summary>
     public void OnCompleted()
     {
-      if (Status == PurchaseRequestStatus.Submitted)
+      if (Status.Value == PurchaseRequestStatus.Submitted.Value)
       {
         Status = PurchaseRequestStatus.Completed;
       }
-      else if (Status == PurchaseRequestStatus.Canceled)
+      else if (Status.Value == PurchaseRequestStatus.Canceled.Value)
       {
         Status = PurchaseRequestStatus.Submitted;
         Console.Out.WriteLine("Canceled State olduğundan önce Submitted olarak işaretlenip sonra completed'a çevrildi");
@@ -54,7 +54,7 @@ namespace PO.DomainLayer.Aggregates.PR
     /// </summary>
     public void OnCanceled()
     {
-      if (Status == PurchaseRequestStatus.Submitted || Status == PurchaseRequestStatus.Completed)
+      if (Status.Value == PurchaseRequestStatus.Submitted.Value || Status.Value == PurchaseRequestStatus.Completed.Value)
       {
         Status = PurchaseRequestStatus.Canceled;
       }

@@ -14,11 +14,13 @@ namespace PO.API.Controllers
   {
     private readonly PurchaseQuoteTestService testService;
     private readonly PoDbContext db;
+    private readonly IPurchaseQuoteRepository purchaseQuoteRepository;
 
-    public TestsController(PurchaseQuoteTestService testService, PoDbContext db)
+    public TestsController(PurchaseQuoteTestService testService, PoDbContext db, IPurchaseQuoteRepository purchaseQuoteRepository)
     {
       this.testService = testService;
       this.db = db;
+      this.purchaseQuoteRepository = purchaseQuoteRepository;
     }
 
     [HttpPost]
@@ -53,6 +55,25 @@ namespace PO.API.Controllers
 
       this.db.PurchaseQuotes.Add(pq);
       this.db.SaveChanges();
+
+      return Ok();
+    }
+
+
+    [HttpPost("{PurchaseQuoteId}/approve")]
+    public IActionResult ApproveQuote(Guid PurchaseQuoteId)
+    {
+
+
+
+      //var q = db.PurchaseQuotes.Find(PurchaseQuoteId);
+      //q.OnApprove(); // eklenmiş olan event
+
+      var q =  this.purchaseQuoteRepository.FindById(PurchaseQuoteId);
+      q.OnApprove();
+
+      this.db.PurchaseQuotes.Update(q); // Change Tracker burada ilgili entity yakalayacak
+      this.db.SaveChanges(); // fırlatılacak.
 
       return Ok();
     }
