@@ -24,6 +24,8 @@ namespace PO.DomainLayer.Aggregates.PQ
       Status = PurchaseQuoteStatus.Submitted;
     }
 
+    public PurchaseQuote() { }
+
     public void OnApprove()
     {
       Status = PurchaseQuoteStatus.Approved;

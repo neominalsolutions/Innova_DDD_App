@@ -30,6 +30,8 @@ namespace PO.DomainLayer.Aggregates.PR
       Description = description;
     }
 
+    public PurchaseRequest() { }
+
     /// <summary>
     /// Purchase Order sürecine girince state değiştirmek için çağırılacak olan method
     /// </summary>

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PO.API.Data;
+using PO.DomainLayer.Aggregates.PO;
 using PO.DomainLayer.Aggregates.PQ;
 using PO.DomainLayer.Aggregates.PR;
 using PO.DomainLayer.Aggregates.Shared;
@@ -23,13 +24,17 @@ builder.Services.AddMediatR(opt =>
   opt.RegisterServicesFromAssemblyContaining<AggregateRoot>();
 });
 
+// Repository Servislerin eklenmesi
+builder.Services.AddScoped<IPurchaseRequestRepository, EFPurchaseRequestRepo>();
+builder.Services.AddScoped<IPurchaseQuoteRepository, EFPurchaseQuoteRepo>();
+builder.Services.AddScoped<IPurchaseOrderRepository, EFPurchaseOrderRepo>();
+
 
 // Veritabaný Baðlantý ayarlarý
 builder.Services.AddDbContext<PoDbContext>(opt =>
 {
-  opt.UseSqlServer("Server=localhost\\MSSQLSERVER01;Database=PurchaseOrderDb;Integrated_Security=True;TrustServerCertificate=True;MultipleActiveResultsSet=True;", opt =>
+  opt.UseSqlServer(builder.Configuration.GetConnectionString("DbConn"), opt =>
   {
-    
     opt.EnableRetryOnFailure();
   });
 });

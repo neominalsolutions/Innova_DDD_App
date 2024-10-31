@@ -25,6 +25,7 @@ namespace PO.DomainLayer.Aggregates.PO
       Status = PurchaseOrderStatus.Submitted;
     }
 
+    public PurchaseOrder() { }
 
     public void OnCancel()
     {
