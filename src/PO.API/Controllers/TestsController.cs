@@ -42,8 +42,6 @@ namespace PO.API.Controllers
       this.db.PurchaseRequests.Add(request);
       this.db.SaveChanges();
 
-   
-
 
       return Ok();
     }

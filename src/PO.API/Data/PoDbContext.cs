@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using PO.DomainLayer.Aggregates.PO;
 using PO.DomainLayer.Aggregates.PQ;
 using PO.DomainLayer.Aggregates.PR;
+using PO.DomainLayer.SeedWork;
 
 namespace PO.API.Data
 {
@@ -9,6 +11,8 @@ namespace PO.API.Data
   {
     // Sadece Aggregate Root olan sınıfları dışarıdan Repository üzerinden erişim yapılsın diye tanımlıyoruz
     // ValueObject veya Enumeration sınıfları DbContext içerisine maplenmez.
+
+    private readonly IMediator mediator;
     public DbSet<PurchaseRequest> PurchaseRequests { get; set; }
 
     public DbSet<PurchaseQuote> PurchaseQuotes { get; set; }
@@ -16,9 +20,9 @@ namespace PO.API.Data
     public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
 
 
-    public PoDbContext(DbContextOptions<PoDbContext> options) : base(options)
+    public PoDbContext(DbContextOptions<PoDbContext> options, IMediator mediator) : base(options)
     {
-
+      this.mediator = mediator;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -48,6 +52,30 @@ namespace PO.API.Data
 
 
       base.OnModelCreating(modelBuilder);
+    }
+
+
+    public override int SaveChanges()
+    {
+      // git changeTracker üzerinden içine event eklenmiş olan nesneleri bul
+      var dbEntries = this.ChangeTracker.Entries<AggregateRoot>().Where(x => x.Entity.events != null && x.Entity.events.Any());
+
+      var events = dbEntries.SelectMany(x => x.Entity.events).ToList();
+
+      events.ForEach((@event) =>
+      {
+        mediator.Publish(@event).Wait();
+      });
+
+      dbEntries.ToList().ForEach((item) =>
+      {
+        item.Entity.ClearEvents(); // Tüm In Memory Eventleri Temizle
+      });
+
+
+      // Pre Save eventleri fırlatacağımız bölge.
+
+      return base.SaveChanges();
     }
   }
 }
