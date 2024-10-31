@@ -33,6 +33,11 @@ namespace PO.DomainLayer.Aggregates.PQ
       // Sürecin başka bir aggregate üzerinden devam etmesi için bir event oluşturduk.
     }
 
+    public void OnReject()
+    {
+      Status = PurchaseQuoteStatus.Rejected;
+    }
+
 
 
   }
