@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Innova.Domain.Core", "libs\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PO.PersistanceLayer", "libs\PO.PersistanceLayer\PO.PersistanceLayer.csproj", "{C7FC8091-4C9A-49D5-BD21-1349605A54DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PO.ApplicationLayer", "src\PO.ApplicationLayer\PO.ApplicationLayer.csproj", "{9C1454EA-A6B7-48B8-AFC9-1841B06F7DEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{C7FC8091-4C9A-49D5-BD21-1349605A54DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7FC8091-4C9A-49D5-BD21-1349605A54DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7FC8091-4C9A-49D5-BD21-1349605A54DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C1454EA-A6B7-48B8-AFC9-1841B06F7DEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C1454EA-A6B7-48B8-AFC9-1841B06F7DEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C1454EA-A6B7-48B8-AFC9-1841B06F7DEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C1454EA-A6B7-48B8-AFC9-1841B06F7DEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +75,7 @@ Global
 		{F87D1C24-6E6A-464B-BEFB-D9F2C27E65FF} = {8B1DA3A6-B919-49F6-B8C8-D2A27DFC641B}
 		{70A88984-7693-4CE2-A6E9-072BB102AEA7} = {8B1DA3A6-B919-49F6-B8C8-D2A27DFC641B}
 		{C7FC8091-4C9A-49D5-BD21-1349605A54DD} = {6FBB2DCF-16C7-4A3E-BBF3-7151EC81A098}
+		{9C1454EA-A6B7-48B8-AFC9-1841B06F7DEF} = {6FBB2DCF-16C7-4A3E-BBF3-7151EC81A098}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5521907C-00DC-4DCF-B6D4-E43B8BA34009}
