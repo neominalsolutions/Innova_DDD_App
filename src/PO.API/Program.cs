@@ -41,6 +41,10 @@ builder.Services.AddScoped<IPurchaseQuoteRepository, EFPurchaseQuoteRepo>();
 builder.Services.AddScoped<IPurchaseOrderRepository, EFPurchaseOrderRepo>();
 builder.Services.AddScoped<IUnitOfWork, PoUnitOfWork>();
 
+// ayný interfaceden farklý nesne instancelarýný üretmek ile ilgili iþlemleri keyed özellikleri ile key bazlý yönetebiliriz.
+//builder.Services.AddKeyedTransient<ITest, Test1>("Test1");
+//builder.Services.AddKeyedTransient<ITest, Test2>("Test2");
+
 
 
 builder.Services.AddScoped<PurchaseQuoteApprovalDomainService>();
@@ -58,6 +62,15 @@ builder.Services.AddDbContext<PoDbContext>(opt =>
 
 
 var app = builder.Build();
+
+
+ //var unitOfWorkServiceInstance = app.Services.GetKeyedService<ITest>("Test2");
+ //unitOfWorkServiceInstance.ShowMessage();
+
+  
+
+// service lookup iþlemi.
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
