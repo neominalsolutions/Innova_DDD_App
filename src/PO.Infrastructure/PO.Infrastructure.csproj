@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\libs\Innova.EF.Infra.Core\Innova.EF.Infra.Core.csproj" />
+    <ProjectReference Include="..\..\libs\PO.PersistanceLayer\PO.PersistanceLayer.csproj" />
+    <ProjectReference Include="..\PO.DomainLayer\PO.DomainLayer.csproj" />
+  </ItemGroup>
+
+</Project>

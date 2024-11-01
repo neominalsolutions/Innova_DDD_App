@@ -1,10 +1,12 @@
+using Innova.Domain.Core;
+using Innova.Infra.Core;
 using Microsoft.EntityFrameworkCore;
-using PO.API.Data;
 using PO.DomainLayer.Aggregates.PO;
 using PO.DomainLayer.Aggregates.PQ;
 using PO.DomainLayer.Aggregates.PR;
 using PO.DomainLayer.Aggregates.Shared;
-using PO.DomainLayer.SeedWork;
+using PO.Infrastructure;
+using PO.PersistanceLayer.EF;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,14 +23,14 @@ builder.Services.AddScoped<PurchaseQuoteTestService>();
 // Tüm Handlerlar Register olur.
 builder.Services.AddMediatR(opt =>
 {
-  opt.RegisterServicesFromAssemblyContaining<AggregateRoot>();
+  opt.RegisterServicesFromAssemblyContaining<PurchaseOrder>();
 });
 
 // Repository Servislerin eklenmesi
 builder.Services.AddScoped<IPurchaseRequestRepository, EFPurchaseRequestRepo>();
 builder.Services.AddScoped<IPurchaseQuoteRepository, EFPurchaseQuoteRepo>();
 builder.Services.AddScoped<IPurchaseOrderRepository, EFPurchaseOrderRepo>();
-builder.Services.AddSingleton<IUnitOfWork, PoUnitOfWork>();
+builder.Services.AddScoped<IUnitOfWork, PoUnitOfWork>();
 builder.Services.AddScoped<PurchaseQuoteApprovalDomainService>();
 
 // Veritabaný Baðlantý ayarlarý

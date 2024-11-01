@@ -10,9 +10,4 @@
     <PackageReference Include="MediatR" Version="12.4.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\libs\Innova.Domain.Core\Innova.Domain.Core.csproj" />
-    <ProjectReference Include="..\..\libs\Innova.Infra.Core\Innova.Infra.Core.csproj" />
-  </ItemGroup>
-
 </Project>

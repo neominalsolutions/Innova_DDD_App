@@ -1,5 +1,5 @@
-﻿using PO.DomainLayer.Aggregates.PR;
-using PO.DomainLayer.SeedWork;
+﻿using Innova.Infra.Core;
+using PO.DomainLayer.Aggregates.PR;
 using System;
 using System.Collections.Generic;
 using System.Linq;

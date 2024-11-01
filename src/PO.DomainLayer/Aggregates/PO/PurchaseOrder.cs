@@ -1,6 +1,6 @@
-﻿using PO.DomainLayer.Aggregates.PQ;
+﻿using Innova.Domain.Core;
+using PO.DomainLayer.Aggregates.PQ;
 using PO.DomainLayer.Aggregates.PR;
-using PO.DomainLayer.SeedWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
