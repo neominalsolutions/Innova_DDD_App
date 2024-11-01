@@ -15,6 +15,8 @@ namespace PO.DomainLayer.SeedWork
     void Add(TAggregateRoot aggregateRoot);
     void Update(TAggregateRoot aggregateRoot);
 
+    void UpdateBulk(TAggregateRoot[] aggregateRoot);
+
     void Remove(TAggregateRoot aggregateRoot);
 
     TAggregateRoot FindById(Guid Id);

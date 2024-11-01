@@ -41,5 +41,10 @@ namespace PO.API.Data
     {
       this.table.Update(aggregateRoot); // Entity State Modifield 
     }
+
+    public void UpdateBulk(TAggregateRoot[] aggregateRoot)
+    {
+      this.table.UpdateRange(aggregateRoot);
+    }
   }
 }

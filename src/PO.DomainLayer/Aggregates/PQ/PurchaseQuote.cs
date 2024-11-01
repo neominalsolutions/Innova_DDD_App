@@ -1,4 +1,5 @@
-﻿using PO.DomainLayer.Aggregates.Shared;
+﻿using PO.DomainLayer.Aggregates.PR;
+using PO.DomainLayer.Aggregates.Shared;
 using PO.DomainLayer.SeedWork;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,9 @@ namespace PO.DomainLayer.Aggregates.PQ
     public Money Cost { get; init; } // Value Object
 
     public PurchaseQuoteStatus Status { get; private set; }
+
+    // DDD yaklaşımına göre çift taraflı bağlantılar bidirectional bağlantılar doğru kabul edilmiyor.unidirectional association önerilir.
+    //public PurchaseRequest PurchaseRequest { get; private set; }
 
     public PurchaseQuote(Guid purchaseRequestId, Money cost)
     {

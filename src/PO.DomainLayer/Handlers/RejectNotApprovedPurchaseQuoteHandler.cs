@@ -34,8 +34,11 @@ namespace PO.DomainLayer.Handlers
         if(item.Id != notification.PurchaseQuoteId)
         {
           item.OnReject();
+          //this.purchaseQuoteRepository.Update(item);
         }
       }
+
+      this.purchaseQuoteRepository.UpdateBulk(notApprovedQuotes.ToArray());
 
       return Console.Out.WriteLineAsync($"{notification.PurchaseQuoteId} Approved oldu {notification.PurchaseRequestId} tanımlanmış tüm diğer Quoteları Rejected Yap \n");
     }

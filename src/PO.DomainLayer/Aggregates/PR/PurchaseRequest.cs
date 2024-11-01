@@ -1,4 +1,5 @@
-﻿using PO.DomainLayer.Aggregates.Shared;
+﻿using PO.DomainLayer.Aggregates.PQ;
+using PO.DomainLayer.Aggregates.Shared;
 using PO.DomainLayer.SeedWork;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,14 @@ namespace PO.DomainLayer.Aggregates.PR
     public PurchaseRequestStatus Status { get; private set; }
     public Money Budget { get; init; }
 
-    public string Description { get; init; }
+
+
+    // unidirectional association önerilir.
+    // ReadOnly olarak tutmamızın sebebi ise, amaç code-defensing, add veya remove gibi methodlar ile aggregate bozucak şekilde kodların engellenmesini sağmak.
+    public IReadOnlyList<PurchaseQuote> Quotes { get; private set; } // Include olarak bağlayıp aggregate bu şekilde oluşturuyoruz.
+
+
+    public string Description { get; init; } // 2x mouse, 1 x kalem
 
     /// <summary>
     /// </summary>
@@ -37,16 +45,19 @@ namespace PO.DomainLayer.Aggregates.PR
     /// </summary>
     public void OnCompleted()
     {
-      if (Status.Value == PurchaseRequestStatus.Submitted.Value)
-      {
-        Status = PurchaseRequestStatus.Completed;
-      }
-      else if (Status.Value == PurchaseRequestStatus.Canceled.Value)
-      {
-        Status = PurchaseRequestStatus.Submitted;
-        Console.Out.WriteLine("Canceled State olduğundan önce Submitted olarak işaretlenip sonra completed'a çevrildi");
-        OnCompleted();
-      }
+      Status = PurchaseRequestStatus.Completed;
+
+
+      //if (Status == PurchaseRequestStatus.Submitted)
+      //{
+      //  Status = PurchaseRequestStatus.Completed;
+      //}
+      //else if (Status == PurchaseRequestStatus.Canceled)
+      //{
+      //  Status = PurchaseRequestStatus.Submitted;
+      //  Console.Out.WriteLine("Canceled State olduğundan önce Submitted olarak işaretlenip sonra completed'a çevrildi");
+      //  OnCompleted();
+      //}
     }
 
     /// <summary>
@@ -54,7 +65,7 @@ namespace PO.DomainLayer.Aggregates.PR
     /// </summary>
     public void OnCanceled()
     {
-      if (Status.Value == PurchaseRequestStatus.Submitted.Value || Status.Value == PurchaseRequestStatus.Completed.Value)
+      if (Status == PurchaseRequestStatus.Submitted || Status == PurchaseRequestStatus.Completed)
       {
         Status = PurchaseRequestStatus.Canceled;
       }

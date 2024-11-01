@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PO.API.Data;
 using PO.API.Dtos;
 using PO.DomainLayer.Aggregates.PQ;
@@ -34,10 +35,21 @@ namespace PO.API.Controllers
       return Ok();
     }
 
+    [HttpPost("findPurchaseRequestWithQuotes")]
+    public IActionResult findPruchaseRequest(Guid PurchaseRequestId)
+    {
+
+      var response = this.db.PurchaseRequests.Include(x => x.Quotes).FirstOrDefault(x => x.Id == PurchaseRequestId);
+
+
+
+      return Ok(response);
+    }
 
     [HttpPost("createRequest")]
     public IActionResult CreatePurchaseRequest()
     {
+
       var money = Money.Create(500000, "TL");
       var request = new PurchaseRequest(money,"15xPC");
 
@@ -63,8 +75,6 @@ namespace PO.API.Controllers
     [HttpPost("{PurchaseQuoteId}/approve")]
     public IActionResult ApproveQuote(Guid PurchaseQuoteId)
     {
-
-
 
       //var q = db.PurchaseQuotes.Find(PurchaseQuoteId);
       //q.OnApprove(); // eklenmiş olan event

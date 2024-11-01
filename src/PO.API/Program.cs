@@ -33,7 +33,7 @@ builder.Services.AddScoped<IPurchaseOrderRepository, EFPurchaseOrderRepo>();
 // Veritabaný Baðlantý ayarlarý
 builder.Services.AddDbContext<PoDbContext>(opt =>
 {
-  opt.UseSqlServer(builder.Configuration.GetConnectionString("DbConn"), opt =>
+  opt.UseSqlServer(builder.Configuration.GetConnectionString("DbConn2"), opt =>
   {
     opt.EnableRetryOnFailure();
   });
