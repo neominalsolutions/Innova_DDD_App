@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Features\PO\" />
-    <Folder Include="Features\PQ\" />
   </ItemGroup>
 
   <ItemGroup>

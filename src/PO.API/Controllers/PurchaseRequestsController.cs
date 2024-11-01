@@ -18,6 +18,11 @@ namespace PO.API.Controllers
       this.mediator = mediator;
     }
 
+    /// <summary>
+    /// Mal Talebi oluşturma süreci
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreatePurchaseRequestDto request)
     {
@@ -27,6 +32,20 @@ namespace PO.API.Controllers
 
       return Ok();
     }
+
+    /// <summary>
+    /// Request'e Code Ekleme
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
+    [HttpPost("addQuote")]
+    public async Task<IActionResult> AddQuote([FromBody] AddQuoteToPurchaseRequestDto request)
+    {
+      await this.mediator.Send(request);
+
+      return Ok();
+    }
+
 
   }
 }
