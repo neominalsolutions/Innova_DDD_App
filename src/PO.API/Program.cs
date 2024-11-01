@@ -29,7 +29,7 @@ builder.Services.AddScoped<IPurchaseRequestRepository, EFPurchaseRequestRepo>();
 builder.Services.AddScoped<IPurchaseQuoteRepository, EFPurchaseQuoteRepo>();
 builder.Services.AddScoped<IPurchaseOrderRepository, EFPurchaseOrderRepo>();
 builder.Services.AddSingleton<IUnitOfWork, PoUnitOfWork>();
-
+builder.Services.AddScoped<PurchaseQuoteApprovalDomainService>();
 
 // Veritabaný Baðlantý ayarlarý
 builder.Services.AddDbContext<PoDbContext>(opt =>
