@@ -28,6 +28,7 @@ builder.Services.AddMediatR(opt =>
 builder.Services.AddScoped<IPurchaseRequestRepository, EFPurchaseRequestRepo>();
 builder.Services.AddScoped<IPurchaseQuoteRepository, EFPurchaseQuoteRepo>();
 builder.Services.AddScoped<IPurchaseOrderRepository, EFPurchaseOrderRepo>();
+builder.Services.AddSingleton<IUnitOfWork, PoUnitOfWork>();
 
 
 // Veritabaný Baðlantý ayarlarý

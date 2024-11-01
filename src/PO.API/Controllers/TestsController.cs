@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PO.API.Data;
 using PO.API.Dtos;
+using PO.DomainLayer.Aggregates.PO;
 using PO.DomainLayer.Aggregates.PQ;
 using PO.DomainLayer.Aggregates.PR;
 using PO.DomainLayer.Aggregates.Shared;
@@ -16,12 +17,13 @@ namespace PO.API.Controllers
     private readonly PurchaseQuoteTestService testService;
     private readonly PoDbContext db;
     private readonly IPurchaseQuoteRepository purchaseQuoteRepository;
-
-    public TestsController(PurchaseQuoteTestService testService, PoDbContext db, IPurchaseQuoteRepository purchaseQuoteRepository)
+    private readonly IPurchaseOrderRepository purchaseOrderRepository;
+    public TestsController(PurchaseQuoteTestService testService, PoDbContext db, IPurchaseQuoteRepository purchaseQuoteRepository, IPurchaseOrderRepository purchaseOrderRepository)
     {
       this.testService = testService;
       this.db = db;
       this.purchaseQuoteRepository = purchaseQuoteRepository;
+      this.purchaseOrderRepository = purchaseOrderRepository;
     }
 
     [HttpPost]
@@ -39,7 +41,10 @@ namespace PO.API.Controllers
     public IActionResult findPruchaseRequest(Guid PurchaseRequestId)
     {
 
-      var response = this.db.PurchaseRequests.Include(x => x.Quotes).FirstOrDefault(x => x.Id == PurchaseRequestId);
+      var response = this.db.PurchaseRequests
+        .Include(x=> x.Items)
+        .Include(x => x.Quotes)
+        .FirstOrDefault(x => x.Id == PurchaseRequestId);
 
 
 
@@ -52,6 +57,12 @@ namespace PO.API.Controllers
 
       var money = Money.Create(500000, "TL");
       var request = new PurchaseRequest(money,"15xPC");
+
+      request.AddItem(PurchaseRequestItem.Create("Mouse", 2));
+      request.AddItem(PurchaseRequestItem.Create("Klavye", 3));
+
+      
+
 
       this.db.PurchaseRequests.Add(request);
       this.db.SaveChanges();
@@ -86,6 +97,14 @@ namespace PO.API.Controllers
       this.db.SaveChanges(); // fırlatılacak.
 
       return Ok();
+    }
+
+    [HttpGet("findPurchaseOrder/{PurchaseOrderId}")]
+    public IActionResult FindPurchaseOrderAggregate(Guid PurchaseOrderId)
+    {
+      var response = this.purchaseOrderRepository.FindById(PurchaseOrderId);
+
+      return Ok(response);
     }
   }
 }

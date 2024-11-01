@@ -1,4 +1,6 @@
-﻿using PO.DomainLayer.SeedWork;
+﻿using PO.DomainLayer.Aggregates.PQ;
+using PO.DomainLayer.Aggregates.PR;
+using PO.DomainLayer.SeedWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +19,11 @@ namespace PO.DomainLayer.Aggregates.PO
 
     public PurchaseOrderStatus Status { get; private set; }
 
+    // navigation Propery UniDirectional
+
+    public PurchaseRequest PurchaseRequest { get; private set; }
+
+    public PurchaseQuote PurchaseQuote { get; private set; }
 
     public PurchaseOrder(Guid purchaseRequestId, Guid purchaseQuoteId)
     {
