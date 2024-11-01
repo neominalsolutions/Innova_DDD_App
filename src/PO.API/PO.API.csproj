@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\libs\PO.PersistanceLayer\PO.PersistanceLayer.csproj" />
+    <ProjectReference Include="..\PO.ApplicationLayer\PO.ApplicationLayer.csproj" />
     <ProjectReference Include="..\PO.DomainLayer\PO.DomainLayer.csproj" />
     <ProjectReference Include="..\PO.Infrastructure\PO.Infrastructure.csproj" />
   </ItemGroup>
