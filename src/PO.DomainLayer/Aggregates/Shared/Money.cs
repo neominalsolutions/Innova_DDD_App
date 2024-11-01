@@ -18,6 +18,7 @@ namespace PO.DomainLayer.Aggregates.Shared
       return $"{Amount} {Currency}";
     }
 
+
     private Money(decimal amount,string currency)
     {
       Amount = amount;
@@ -27,6 +28,41 @@ namespace PO.DomainLayer.Aggregates.Shared
     public static Money Create(decimal amount, string curreny)
     {
       return new Money(amount, curreny);
+    }
+
+    public static Money operator +(Money m1, Money m2)
+    {
+      ArgumentNullException.ThrowIfNull(m1);
+      ArgumentNullException.ThrowIfNull(m2);
+
+      var sum = Money.Create(m1.Amount + m2.Amount,m1.Currency);
+
+      return sum;
+    }
+
+    public static Money operator -(Money m1, Money m2)
+    {
+      ArgumentNullException.ThrowIfNull(m1);
+      ArgumentNullException.ThrowIfNull(m2);
+
+      var substract = Money.Create(m1.Amount - m2.Amount, m1.Currency);
+
+      return substract;
+    }
+    public static bool operator <=(Money m1, Money m2)
+    {
+      ArgumentNullException.ThrowIfNull(m1);
+      ArgumentNullException.ThrowIfNull(m2);
+
+      return m1.Amount <= m2.Amount;
+    }
+
+    public static bool operator >=(Money m1, Money m2)
+    {
+      ArgumentNullException.ThrowIfNull(m1);
+      ArgumentNullException.ThrowIfNull(m2);
+
+      return m1.Amount >= m2.Amount;
     }
 
     public static Money Zero(string currency)

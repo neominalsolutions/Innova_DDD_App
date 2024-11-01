@@ -23,8 +23,16 @@ namespace PO.DomainLayer.Aggregates.PQ
 
       ArgumentNullException.ThrowIfNull(request);
 
+      // Bu kod bloğu yerine aşağıdaki gibi ValueObject'e < > operatörleri ekletik.
+      //if (request.Budget.Amount >= purchaseQuote.Cost.Amount)
+      //{
+      //  return true;
+      //}
+
+      //var total = (request.Budget + purchaseQuote.Cost);
+
       // Money ValueObject Nesnesini Operatörler ile birlikte kullanacak şekilde yazalım.
-      if (request.Budget.Amount >= purchaseQuote.Cost.Amount)
+      if (request.Budget >= purchaseQuote.Cost)
       {
         return true;
       }
