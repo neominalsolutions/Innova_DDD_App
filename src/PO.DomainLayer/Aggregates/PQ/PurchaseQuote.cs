@@ -36,6 +36,7 @@ namespace PO.DomainLayer.Aggregates.PQ
       // TransformAsOrder Eventi Aggregate Root içerisine ekle.
       AddEvent(new TransformAsOrderEvent(PurchaseRequestId: PurchaseRequestId,
         PurchaseQuoteId: Id));
+ 
       // Sürecin başka bir aggregate üzerinden devam etmesi için bir event oluşturduk.
     }
 

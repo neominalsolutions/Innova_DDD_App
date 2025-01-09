@@ -1,10 +1,12 @@
 ﻿using Innova.Infra.Core;
+using MediatR;
 using PO.DomainLayer.Aggregates.PR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace PO.DomainLayer.Aggregates.PQ
 {
@@ -15,12 +17,14 @@ namespace PO.DomainLayer.Aggregates.PQ
     private readonly IPurchaseQuoteRepository purchaseQuoteRepository;
     private readonly IUnitOfWork unitOfWork;
     private readonly PurchaseQuoteApprovalDomainService purchaseQuoteApprovalDomainService;
+    private readonly IMediator mediator;
 
-    public PurchaseQuoteService(IPurchaseQuoteRepository purchaseQuoteRepository, IUnitOfWork unitOfWork, PurchaseQuoteApprovalDomainService purchaseQuoteApprovalDomainService)
+    public PurchaseQuoteService(IPurchaseQuoteRepository purchaseQuoteRepository, IUnitOfWork unitOfWork, PurchaseQuoteApprovalDomainService purchaseQuoteApprovalDomainService, IMediator mediator)
     {
       this.purchaseQuoteRepository = purchaseQuoteRepository;
       this.unitOfWork = unitOfWork;
       this.purchaseQuoteApprovalDomainService = purchaseQuoteApprovalDomainService;
+      this.mediator = mediator;
     }
 
 
@@ -40,11 +44,15 @@ namespace PO.DomainLayer.Aggregates.PQ
 
       var approved = this.purchaseQuoteApprovalDomainService.CheckApprovalRule(quote);
 
+    
+
       if (approved)
       {
         quote.OnApprove();
+        // save öncesi manuel olarak gönderim. ORM tool yoksa manuel gönderebiliriz. this.mediator.Publish(quote.events[0]);
         this.purchaseQuoteRepository.Update(quote);
-        this.unitOfWork.Commit();
+        this.unitOfWork.Commit(); // saveChanges
+        // elastic veya log
       }
       else
       {

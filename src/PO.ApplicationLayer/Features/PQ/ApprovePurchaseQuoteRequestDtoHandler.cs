@@ -22,6 +22,8 @@ namespace PO.ApplicationLayer.Features.PQ
     {
 
       this.purchaseQuoteService.Approve(request.PurchaseQuoteId);
+      // Not: Domain eventler sonrası kayıt başarılı olduysa application katmanında Integration Event fırlatara süreci Microservices dağıtalım.
+      // 
 
       return Task.CompletedTask;
     }
