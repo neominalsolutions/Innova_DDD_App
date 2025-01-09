@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace PO.DomainLayer.Aggregates.Shared
 {
+  //public record ValueObject2();
+  //public record Money2(decimal Amount,string Currency): ValueObject2;
   public class Money : ValueObject
   {
     public decimal Amount { get; init; }
@@ -72,8 +74,8 @@ namespace PO.DomainLayer.Aggregates.Shared
 
     protected override IEnumerable<object> GetEqualityComponents()
     {
-      yield return Currency;
-      yield return Amount;
+      yield return Currency.Trim();
+      yield return Math.Round(Amount,2);
     }
   }
 }

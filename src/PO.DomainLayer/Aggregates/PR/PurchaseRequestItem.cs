@@ -15,11 +15,6 @@ namespace PO.DomainLayer.Aggregates.PR
 
     // public Guid PurchaseRequestId { get; set; }
 
-    public PurchaseRequestItem() // EF Migration için gerekli
-    {
-
-    }
-
     private PurchaseRequestItem(string name, int quantity)
     {
       ArgumentNullException.ThrowIfNull(name);
